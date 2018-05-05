@@ -13,7 +13,7 @@ const NSInteger ATDefaultGroup = 0;
 @interface ATModuleManager()
 
 @property (nonatomic, strong) NSMutableDictionary *modules;// <identifier, id<ATModuleProtocol>>
-@property (nonatomic, strong) NSMutableDictionary *groups;// <group, NSMutableSet<id<ATModuleProtocol>>>
+@property (nonatomic, strong) NSMutableDictionary *groups;// <group, NSMutableArray<id<ATModuleProtocol>>>
 
 @end
 
@@ -44,12 +44,12 @@ const NSInteger ATDefaultGroup = 0;
     if (!_groups) {
         _groups = [[NSMutableDictionary alloc] init];
     }
-    NSMutableSet *aSet = [_groups objectForKey:@(group)];
-    if (!aSet) {
-        aSet = [[NSMutableSet alloc] init];
-        [_groups setObject:aSet forKey:@(group)];
+    NSMutableArray *aArray = [_groups objectForKey:@(group)];
+    if (!aArray) {
+        aArray = [[NSMutableArray alloc] init];
+        [_groups setObject:aArray forKey:@(group)];
     }
-    [aSet addObject:module];
+    [aArray addObject:module];
 }
 
 - (void)removeModuleWithIdentifier:(NSString *)identifier
@@ -63,23 +63,23 @@ const NSInteger ATDefaultGroup = 0;
     
     [_modules removeObjectForKey:identifier];
     
-    NSMutableSet *aSet = [_groups objectForKey:@(group)];
-    [aSet removeObject:obj];
+    NSMutableArray *aArray = [_groups objectForKey:@(group)];
+    [aArray removeObject:obj];
 }
 
 - (void)initModuleWithGroup:(NSInteger)group
 {
-    NSMutableSet *aSet = [_groups objectForKey:@(group)];
-    if (aSet) {
-        [aSet makeObjectsPerformSelector:@selector(initModule)];
+    NSMutableArray *aArray = [_groups objectForKey:@(group)];
+    if (aArray) {
+        [aArray makeObjectsPerformSelector:@selector(initModule)];
     }
 }
 
 - (void)uninitModuleWithGroup:(NSInteger)group
 {
-    NSMutableSet *aSet = [_groups objectForKey:@(group)];
-    if (aSet) {
-        [aSet makeObjectsPerformSelector:@selector(uninitModule)];
+    NSMutableArray *aArray = [_groups objectForKey:@(group)];
+    if (aArray) {
+        [aArray makeObjectsPerformSelector:@selector(uninitModule)];
     }
 }
 
