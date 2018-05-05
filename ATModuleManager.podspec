@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ATModuleManager"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "ATModuleManager for iOS"
   s.homepage     = "https://github.com/linzhiman/ATModuleManager"
   s.license      = "MIT"

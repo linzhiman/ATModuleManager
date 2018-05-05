@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "ATModuleProtocol.h"
 
+#define ATAddModuleGroup(atModuleManager, atModuleClass, atGroup) \
+    [atModuleManager addModule:[[atModuleClass alloc] init] identifier:@#atModuleClass group:atGroup];
+
 #define ATAddModule(atModuleManager, atModuleClass) \
-    [atModuleManager addModule:[[atModuleClass alloc] init] identifier:@#atModuleClass];
+    ATAddModuleGroup(atModuleManager, atModuleClass, ATDefaultGroup);
 
 #define ATGetModule(atModuleManager, atModuleClass) \
     ((atModuleClass *)[atModuleManager moduleWithIdentifier:@#atModuleClass])
